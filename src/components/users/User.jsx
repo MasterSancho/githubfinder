@@ -1,5 +1,5 @@
 import React, { Fragment, useEffect } from 'react';
-import Spinner from '../../homePage/layout/Spinner';
+import Spinner from '../layout/Spinner';
 import Repos from '../repos/Repos';
 import { Link } from 'react-router-dom';
 
