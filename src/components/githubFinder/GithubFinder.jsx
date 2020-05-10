@@ -1,14 +1,16 @@
 import React, { Component } from 'react';
-import Navbar from './layout/Navbar';
+import Navbar from '../homePage/layout/Navbar';
 import Users from './users/Users';
 import Search from './users/Search';
+import Alert from './layout/Alert';
 import axios from 'axios';
 import './githubFinder.css';
 
 class GithubFinder extends Component {
   state = {
     users: [],
-    loading: false
+    loading: false,
+    alert: null
   };
 
   async componentDidMount() {
@@ -34,6 +36,13 @@ class GithubFinder extends Component {
   // clear users from state
   clearUsers = () => this.setState({ users: [], loading: false });
 
+  // set Alert
+  setAlert = (msg, type) => {
+    this.setState({ alert: { msg, type } });
+
+    setTimeout(() => this.setState({ alert: null }), 5000);
+  };
+
   render() {
     const { users, loading } = this.state;
 
@@ -41,10 +50,12 @@ class GithubFinder extends Component {
       <div className='App'>
         <Navbar />
         <div className='container'>
+          <Alert alert={this.state.alert} />
           <Search
             searchUsers={this.searchUsers}
             clearUsers={this.clearUsers}
             showClear={this.state.users.length > 0 ? true : false}
+            setAlert={this.setAlert}
           />
           <Users loading={loading} users={users} />
         </div>
