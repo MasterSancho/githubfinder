@@ -1,8 +1,9 @@
-import React, { Component } from 'react';
-import Navbar from '../homePage/layout/Navbar';
+import React, { Component, Fragment } from 'react';
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import Users from './users/Users';
 import Search from './users/Search';
 import Alert from './layout/Alert';
+import About from '../pages/About';
 import axios from 'axios';
 import './githubFinder.css';
 
@@ -47,18 +48,26 @@ class GithubFinder extends Component {
     const { users, loading } = this.state;
 
     return (
-      <div className='App'>
-        <Navbar />
-        <div className='container'>
-          <Alert alert={this.state.alert} />
-          <Search
-            searchUsers={this.searchUsers}
-            clearUsers={this.clearUsers}
-            showClear={this.state.users.length > 0 ? true : false}
-            setAlert={this.setAlert}
+      <div>
+        <Alert alert={this.state.alert} />
+        <Switch>
+          <Route
+            exact
+            path='/'
+            render={props => (
+              <Fragment>
+                <Search
+                  searchUsers={this.searchUsers}
+                  clearUsers={this.clearUsers}
+                  showClear={this.state.users.length > 0 ? true : false}
+                  setAlert={this.setAlert}
+                />
+                <Users loading={loading} users={users} />
+              </Fragment>
+            )}
           />
-          <Users loading={loading} users={users} />
-        </div>
+          <Route exact path='/about' component={About} />
+        </Switch>
       </div>
     );
   }
