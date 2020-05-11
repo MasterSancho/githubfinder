@@ -1,13 +1,22 @@
 import {
+  SHOW_USERS,
   SEARCH_USERS,
   SET_LOADING,
   CLEAR_USERS,
   GET_USER,
-  GET_REPOS
+  GET_REPOS,
+  SET_ALERT,
+  REMOVE_ALERT
 } from '../types';
 
 export default (state, action) => {
   switch (action.type) {
+    case SHOW_USERS:
+      return {
+        ...state,
+        users: action.payload,
+        loading: false
+      };
     case SEARCH_USERS:
       return {
         ...state,
@@ -36,6 +45,16 @@ export default (state, action) => {
       return {
         ...state,
         loading: true
+      };
+    case SET_ALERT:
+      return {
+        ...state,
+        alert: action.payload
+      };
+    case REMOVE_ALERT:
+      return {
+        ...state,
+        alert: null
       };
     default:
       return state;

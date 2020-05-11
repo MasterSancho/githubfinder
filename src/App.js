@@ -1,66 +1,29 @@
-import React, { useState, useEffect, Fragment } from 'react';
+import React from 'react';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import Navbar from './components/layout/Navbar';
-import Users from './components/users/Users';
 import User from './components/users/User';
-import Search from './components/users/Search';
 import Alert from './components/layout/Alert';
+import Home from './components/pages/Home';
 import About from './components/pages/About';
+import NotFound from './components/pages/NotFound';
+
 import GithubState from './context/github/GithubState';
 
 import './App.css';
 
-const GithubFinder = () => {
-  const [alert, setAlert] = useState(null);
-
-  // useEffect(() => {
-  //   showUsers();
-  // }, []);
-
-  // const showUsers = async () => {
-  //   setLoading(true);
-  //   const res = await axios.get(
-  //     `https://api.github.com/users?client_id=${process.env.REACT_APP_GITHUB_CLIENT_ID}&client_secret=${process.env.REACT_APP_GITHUB_CLIENT_SECRET}`
-  //   );
-  //   setUsers(res.data);
-  //   setLoading(false);
-  // };
-
-  // Search Github Users
-
-  // get single github user
-
-  // get users repos
-
-  // clear users from state
-
-  // set Alert
-  const showAlert = (msg, type) => {
-    setAlert({ msg, type });
-    setTimeout(() => setAlert(null), 5000);
-  };
-
+const App = () => {
   return (
     <GithubState>
       <Router>
-        <div>
+        <div className='App'>
           <Navbar />
           <div className='container'>
-            <Alert alert={alert} />
+            <Alert />
             <Switch>
-              <Route
-                exact
-                path='/'
-                render={props => (
-                  <Fragment>
-                    <Search setAlert={showAlert} />
-                    <Users />
-                  </Fragment>
-                )}
-              />
+              <Route exact path='/' component={Home} />
               <Route exact path='/about' component={About} />
               <Route exact path='/user/:login' component={User} />
-              )} />
+              <Route component={NotFound} />
             </Switch>
           </div>
         </div>
@@ -69,4 +32,4 @@ const GithubFinder = () => {
   );
 };
 
-export default GithubFinder;
+export default App;
